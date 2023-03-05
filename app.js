@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path');
+const _ = require('lodash')
 
 const app = express()
 const port = 3000;
@@ -14,9 +15,47 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views'))
 
+const allPost = [];
 
 app.get('/',(req, res)=>{
-  res.render('home')
+  res.render('home', { homeStartingContent, allPost })
+});
+
+
+app.get('/about', (req, res) => {
+  res.render('about', { aboutContent })
+});
+
+app.get('/contact', (req, res)=>{
+  res.render('contact', { contactContent })
+});
+app.get('/compose', (req, res) => {
+  res.render('compose')
+});
+
+app.post('/compose', (req, res)=>{
+  const { postTitle, postMsg } = req.body;
+  const post = {
+    title:postTitle,
+    content:postMsg
+  }
+  allPost.push(post)
+  res.redirect('/compose')
+})
+app.get('/post', (req, res)=>{
+  res.render('post', {allPost})
+})
+
+app.get('/posts/:postName',(req, res)=>{
+  const paramName = _.lowerCase(req.params.postName);
+  for (let post of allPost){
+    const postTitle = _.lowerCase(post.title);
+    const {title, content} = post;
+    if (paramName === postTitle){
+      res.render('singlepost',{title, content})
+      console.log('Match Found');
+    }
+  };
 });
 
 app.listen(port,()=>{

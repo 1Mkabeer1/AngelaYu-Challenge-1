@@ -1,0 +1,25 @@
+<!-- ------------------------------------------------------------------- -->
+<%- include('partials/header')%>
+<!-- ------------------------------------------------------------------- --> 
+
+                <!-- compose section of the app-->
+
+    <h1>Compose</h1>
+
+    <form action="" method="post">
+
+   <div class="form-group" >
+   <label for="title">Tittle:</label>
+   <input id="title" class="form-control" type="text" name="postTitle">
+   </div>
+
+   <div class="form-group">
+   <label for="post">Posts:</label>
+   <textarea class="form-control" name="postMsg" id="post" cols="20" rows="5"></textarea>
+   </div> 
+   <button class="btn btn-secondary" name="button">Publish</button>
+
+</form>
+<!-- ------------------------------------------------------------------- -->
+                    <%- include('partials/footer.ejs') %>
+<!-- ------------------------------------------------------------------- -->
